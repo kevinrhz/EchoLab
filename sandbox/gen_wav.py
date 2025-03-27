@@ -1,9 +1,9 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-rate = 44100
-duration = 0.01  # seconds
-freq = 440
+rate = 40
+duration = 1  # seconds
+freq = 20
 
 t = np.linspace(0, duration, int(rate * duration), endpoint=False)
 y = 0.5 * np.sin(2 * np.pi * freq * t)
