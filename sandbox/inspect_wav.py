@@ -1,11 +1,12 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from scipy.io import wavfile
+from pathlib import Path
 
 
 # Load a local .wav file
-filename = "sandbox/sine440hz.wav"
-rate, data = wavfile.read(filename)
+file = Path(__file__).resolve().parents[1] / 'data' / 'sine440hz.wav'
+rate, data = wavfile.read(file)
 
 # Print metadata
 print(f"Sample rate: {rate}")

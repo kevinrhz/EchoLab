@@ -9,7 +9,7 @@ t = np.linspace(0, duration, int(rate * duration), endpoint=False)
 y = 0.5 * np.sin(2 * np.pi * freq * t)
 
 plt.plot(t, y)
-plt.title("440 Hz Sine Wave (10 ms)")
+plt.title("Custom Wave")
 plt.xlabel("Time (s)")
 plt.ylabel("Amplitude")
 plt.grid(True)
