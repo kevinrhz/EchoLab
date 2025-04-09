@@ -52,12 +52,14 @@ class MainWindow(QMainWindow):
         self.end_spin.setSingleStep(0.1)
         self.end_spin.setDecimals(3)
 
-        self.range_button = QPushButton("Plot Range")
-        self.range_button.clicked.connect(self.plot_range)
-
         self.sidebar.addWidget(self.start_spin)
         self.sidebar.addWidget(self.end_spin)
-        self.sidebar.addWidget(self.range_button)
+        self.start_spin.setEnabled(False)
+        self.end_spin.setEnabled(False)
+
+        # auto update plot when stat/end times change
+        self.start_spin.valueChanged.connect(self.plot_range)
+        self.end_spin.valueChanged.connect(self.plot_range)
 
         # Main viewer stays the same
         self.layout.addLayout(self.sidebar, 1)
@@ -78,8 +80,14 @@ class MainWindow(QMainWindow):
         except Exception as e:
             QMessageBox.critical(self, "Error", str(e))
 
+        self.start_spin.setEnabled(True)
+        self.end_spin.setEnabled(True)
+
         self.start_spin.setValue(0.0)
         self.end_spin.setValue(self.signal.duration)
+
+        self.end_spin.setMaximum(self.signal.duration)
+        self.start_spin.setMaximum(self.signal.duration)
 
 
     def plot_range(self):
