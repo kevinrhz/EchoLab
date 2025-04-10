@@ -35,7 +35,7 @@ class MainWindow(QMainWindow):
         open_action.triggered.connect(self.open_file)
         file_menu.addAction(open_action)
 
-        # Sidebar
+        # SIDEBAR
         self.sidebar = QVBoxLayout()
         self.sidebar.setAlignment(Qt.AlignmentFlag.AlignTop)
 
@@ -61,6 +61,12 @@ class MainWindow(QMainWindow):
         self.start_spin.valueChanged.connect(self.plot_range)
         self.end_spin.valueChanged.connect(self.plot_range)
 
+        # Reset view button
+        self.reset_button = QPushButton("Reset View")
+        self.reset_button.clicked.connect(self.reset_view)
+        self.sidebar.addWidget(self.reset_button)
+        self.reset_button.setEnabled(False)
+
         # Main viewer stays the same
         self.layout.addLayout(self.sidebar, 1)
         self.layout.addWidget(self.viewer, 4)
@@ -82,12 +88,11 @@ class MainWindow(QMainWindow):
 
         self.start_spin.setEnabled(True)
         self.end_spin.setEnabled(True)
-
-        self.start_spin.setValue(0.0)
-        self.end_spin.setValue(self.signal.duration)
-
         self.end_spin.setMaximum(self.signal.duration)
         self.start_spin.setMaximum(self.signal.duration)
+
+        self.reset_button.setEnabled(True)
+
 
 
     def plot_range(self):
@@ -104,4 +109,14 @@ class MainWindow(QMainWindow):
         self.viewer.update_signal(self.signal, start_time=start, end_time=end)
 
 
+    def reset_view(self):
+        if self.signal:
+            self.start_spin.blockSignals(True)
+            self.end_spin.blockSignals(True)
 
+            self.start_spin.setValue(0.0)
+            self.end_spin.setValue(self.signal.duration)
+            self.viewer.update_signal(self.signal)
+
+            self.start_spin.blockSignals(False)
+            self.end_spin.blockSignals(False)

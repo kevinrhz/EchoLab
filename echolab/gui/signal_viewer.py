@@ -10,6 +10,7 @@ class SignalViewer(QWidget):
         self.plot_widget = pg.PlotWidget(title="Waveform")
         self.plot_widget.setLabel("bottom", "Time", "s")
         self.plot_widget.setLabel("left", "Amplitude")
+        self.plot_widget.setMouseEnabled(x=False, y=False)
         self.plot = self.plot_widget.plot()
 
         layout.addWidget(self.plot_widget)
